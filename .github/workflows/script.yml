@@ -1,4 +1,4 @@
-name: Run IBM_Tasks 
+name: Run IBM_Tasks
 
 on: [push, pull_request]
 
@@ -21,10 +21,17 @@ jobs:
         pip install requests 
         pip install pandas 
         pip install beautifulsoup4 
-         pip install plotly
-        
+        pip install plotly
+        pip install kaleido  # Install kaleido to enable saving images
 
-    - name: Run Python scripts
+    - name: Run Python script
       run: |
         python .github/workflows/Q.py
-        
+
+    - name: Upload Graphs as Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: stock-graphs
+        path: |
+          tesla_stock_graph.png
+          gme_stock_graph.png
