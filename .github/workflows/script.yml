@@ -1,0 +1,29 @@
+name: Run IBM_Tasks 
+
+on: [push, pull_request]
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install yfinance 
+        pip install matplotlib 
+        pip install requests 
+        pip install pandas 
+        pip install beautifulsoup4 
+        
+
+    - name: Run Python scripts
+      run: |
+        python .github/workflows/Q.py
+        
