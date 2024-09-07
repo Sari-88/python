@@ -25,5 +25,5 @@ jobs:
 
     - name: Run Python scripts
       run: |
-        python .github/workflows/Q .py
+        python .github/workflows/Q.py
         
