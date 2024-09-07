@@ -1,3 +1,9 @@
+import yfinance as yf
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+import matplotlib
+from matplotlib import make_subplots
 #Define Graphing Function
 
 def make_graph(stock_data, revenue_data, stock):
