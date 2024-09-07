@@ -64,7 +64,7 @@ gme = yf.Ticker('GME')
 
 gme_data = gme.history(period = "max")
 gme_data.reset_index(inplace=True)
-gme_data.head(5). 
+gme_data.head(5)
 
 print ('Question 4: Use Webscraping to Extract GME Revenue Data') 
 
