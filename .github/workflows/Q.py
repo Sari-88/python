@@ -18,7 +18,8 @@ def make_graph(stock_data, revenue_data, stock):
 print ('Question 1: Use yfinance to Extract Stock Data') 
 
 #Define the ticker 
-tesla = yfinance.Ticker('TSLA')
+import yfinance as yf
+tesla = yf.Ticker('TSLA')
 
 tesla_data = tesla.history(period="max")
 #Reset the index 
