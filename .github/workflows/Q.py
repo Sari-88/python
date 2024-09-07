@@ -25,23 +25,31 @@ tesla_data = tesla.history(period="max")
 tesla_data.reset_index(inplace=True)
 print(tesla_data.head(5))
 
-# Question 2: Web scraping Tesla revenue data
+# For Tesla Revenue
 print('Question 2: Web scraping to Extract Tesla Revenue Data')
 url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
 html_data = requests.get(url).text
 soup = BeautifulSoup(html_data, "html5lib")
+print("HTML Data Fetched")
+print(soup.prettify())  # Output the HTML content to debug
+
 tesla_revenue = pd.DataFrame(columns=["Date", "Revenue"])
-for table in soup.find_all('table'):
-    if table.find('th').getText().startswith("Tesla Quarterly Revenue"):
-        for row in table.find("tbody").find_all("tr"):
-            col = row.find_all("td")
-            if len(col) != 2: continue
-            Date = col[0].text
-            Revenue = col[1].text.replace("$", "").replace(",", "")
-            tesla_revenue = tesla_revenue.append({"Date": Date, "Revenue": Revenue}, ignore_index=True)
+try:
+    for table in soup.find_all('table'):
+        if table.find('th').getText().startswith("Tesla Quarterly Revenue"):
+            for row in table.find("tbody").find_all("tr"):
+                col = row.find_all("td")
+                if len(col) != 2: continue
+                Date = col[0].text
+                Revenue = col[1].text.replace("$", "").replace(",", "")
+                tesla_revenue = tesla_revenue.append({"Date": Date, "Revenue": Revenue}, ignore_index=True)
+except Exception as e:
+    print(f"Error while scraping Tesla revenue data: {e}")
+    
 tesla_revenue.dropna(subset=["Revenue"], inplace=True)
 tesla_revenue = tesla_revenue[tesla_revenue['Revenue'] != ""]
-print(tesla_revenue.tail(5))
+print(tesla_revenue.tail(5))  # Output the fetched data for verification
+
 
 # Question 3: Extract GameStop stock data
 print('Question 3: Use yfinance to Extract GME Stock Data')
