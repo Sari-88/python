@@ -3,7 +3,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import matplotlib
-from matplotlib import make_subplots
+from plotly.subplots import make_subplots  # Correct import
+import plotly.graph_objects as go
 #Define Graphing Function
 
 def make_graph(stock_data, revenue_data, stock):
