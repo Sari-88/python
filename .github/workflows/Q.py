@@ -28,7 +28,7 @@ tesla_data.reset_index(inplace=True)
 tesla_data.head(5)
 
 print('Question 2: Use Webscraping to Extract Tesla Revenue Data') 
-
+import requests
 url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
 html_data = requests.get(url).text
 
