@@ -84,8 +84,8 @@ gme_revenue.tail()
 
 print('Question 5: Plot Tesla Stock Graph') 
 
-  make_graph(tesla_data,tesla_revenue,'Tesla')
+       make_graph(tesla_data,tesla_revenue,'Tesla')
 
 print ('Question 6: Plot GameStop Stock Graph') 
 
-       make_graph(gme_data,gme_revenue,'GameStop')
+        make_graph(gme_data,gme_revenue,'GameStop')
