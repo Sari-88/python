@@ -50,7 +50,7 @@ not_empty=tesla_revenue["Revenue"]!=""
 tesla_revenue=tesla_revenue[not_empty]
 tesla_revenue.tail()
 
- print('Question 3: Use yfinance to Extract Stock Data') 
+print('Question 3: Use yfinance to Extract Stock Data') 
 
 gmestop=yf.Ticker("GME")
 
