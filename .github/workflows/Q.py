@@ -27,29 +27,35 @@ tesla_data.reset_index(inplace=True)
 tesla_data.head()
 
 print('Question 2: Use Webscraping to Extract Tesla Revenue Data')
-url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue."
+url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
 html_data = requests.get(url).text
 beautiful_soup = BeautifulSoup(html_data, "html5lib")
 
 tables = beautiful_soup.find_all("table")
+table_index = -1
 for index, table in enumerate(tables):
-    if("Tesla Quarterly Revenue" in str(table)):
+    if "Tesla Quarterly Revenue" in str(table):
         table_index = index
-tesla_revenue = pd.DataFrame(columns=["Date", "Revenue"])
+        break
 
-for row in tables[table_index].tbody.find_all('tr'):
-    col = row.find_all("td")
-    if(col != []):
-        date = col[0].text
-        revenue = col[1].text.strip().replace("$", "").replace(",", "")
-        tesla_revenue = tesla_revenue.append({"Date": date, "Revenue": revenue}, ignore_index=True)
-tesla_revenue.head()
-print(tesla_revenue)
+if table_index == -1:
+    print("Tesla Quarterly Revenue table not found.")
+else:
+    tesla_revenue = pd.DataFrame(columns=["Date", "Revenue"])
 
-tesla_revenue.dropna(inplace=True)
-not_empty = tesla_revenue["Revenue"] != ""
-tesla_revenue = tesla_revenue[not_empty]
-tesla_revenue.tail()
+    for row in tables[table_index].tbody.find_all('tr'):
+        col = row.find_all("td")
+        if col != []:
+            date = col[0].text
+            revenue = col[1].text.strip().replace("$", "").replace(",", "")
+            tesla_revenue = tesla_revenue.append({"Date": date, "Revenue": revenue}, ignore_index=True)
+    tesla_revenue.head()
+    print(tesla_revenue)
+
+    tesla_revenue.dropna(inplace=True)
+    not_empty = tesla_revenue["Revenue"] != ""
+    tesla_revenue = tesla_revenue[not_empty]
+    tesla_revenue.tail()
 
 print('Question 3: Use yfinance to Extract Stock Data')
 
@@ -61,27 +67,31 @@ gme_data.head()
 
 print('Question 4: Use Webscraping to Extract GME Revenue Data')
 
-url = "https://www.macrotrends.net/stocks/charts/GME/gamestop/revenue."
+url = "https://www.macrotrends.net/stocks/charts/GME/gamestop/revenue"
 html_data = requests.get(url).text
 
 beautiful_soup = BeautifulSoup(html_data, "html.parser")
 
 tables = beautiful_soup.find_all("table")
+table_index = -1
 for index, table in enumerate(tables):
-    if(str(table) == "GameStop Quarterly Revenue"):
+    if "GameStop Quarterly Revenue" in str(table):
         table_index = index
+        break
 
-gme_revenue = pd.DataFrame(columns=["Date", "Revenue"])
+if table_index == -1:
+    print("GameStop Quarterly Revenue table not found.")
+else:
+    gme_revenue = pd.DataFrame(columns=["Date", "Revenue"])
 
-for row in tables[table_index].tbody.find_all("tr"):
-    col = row.find_all("td")
-    if(col != []):
-        date = col[0].text
-        revenue = col[1].text.replace("$", "").replace(",", "")
-        gme_revenue = gme_revenue.append({"Date": date, "Revenue": revenue}, ignore_index=True)
-gme_revenue.head()
-
-gme_revenue.tail()
+    for row in tables[table_index].tbody.find_all("tr"):
+        col = row.find_all("td")
+        if col != []:
+            date = col[0].text
+            revenue = col[1].text.replace("$", "").replace(",", "")
+            gme_revenue = gme_revenue.append({"Date": date, "Revenue": revenue}, ignore_index=True)
+    gme_revenue.head()
+    gme_revenue.tail()
 
 print('Question 5: Plot Tesla Stock Graph')
 
